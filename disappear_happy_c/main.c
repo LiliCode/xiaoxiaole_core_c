@@ -7,9 +7,15 @@
 //
 
 #include <stdio.h>
+#include "DHMap.h"
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    printf("Hello, World!\n");
+int main(int argc, const char * argv[])
+{
+    Map map = createMap();
+    
+    printMap(map);
+    
+    
     return 0;
 }
+
