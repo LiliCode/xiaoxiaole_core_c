@@ -74,15 +74,46 @@ void printMap(Map map)
 
 void clickMapPoint(Map map, Point point)
 {
+    //判断是否在点击范围内
     if (!rectContainsPoint(map.rect, point))
     {
         return;
     }
     
+    //判断点击的box是否是无效的box
+    if ((*(map.map_array + point.x) + point.y)->boxColor.type == clr)
+    {
+        return;
+    }
+    
     //如果点在地图中
-    
-    
+    disapperBoxs(map, point);
 }
+
+
+
+void disapperBoxs(Map map, Point point)
+{
+    Box *clickBox = *(map.map_array + point.x) + point.y;
+    
+    if (clickBox->topBoxColor == clickBox->boxColor.type)
+    {
+        
+    }
+    else if (clickBox->bottomBoxColor == clickBox->boxColor.type)
+    {
+        
+    }
+    else if (clickBox->leftBoxColor == clickBox->boxColor.type)
+    {
+        
+    }
+    else if (clickBox->rightBoxColor == clickBox->boxColor.type)
+    {
+        
+    }
+}
+
 
 
 

@@ -51,7 +51,13 @@ extern void initMap(Map map);
  */
 extern void clickMapPoint(Map map, Point point);
 
-
+/**
+ *  消去方块
+ *
+ *  @param map   地图
+ *  @param point 点击点
+ */
+void disapperBoxs(Map map, Point point);
 
 /**
  *  打印地图
