@@ -19,7 +19,7 @@ static Box mapArray[MAP_SIZE][MAP_SIZE];
 Map createMap()
 {
     Map map;
-    map.rect.size = sizeMake(MAP_SIZE, MAP_SIZE);
+    map.rect = rectMake(pointMake(0, 0), sizeMake(MAP_SIZE, MAP_SIZE));
     map.map_array = mapArray;
     
     //随机种子
@@ -40,6 +40,23 @@ Map createMap()
     
     return map;
 }
+
+void initMap(Map map)
+{
+    for(int row = 0; row < map.rect.size.height; row++)
+    {
+        for(int col = 0; col < map.rect.size.width; col++)
+        {
+            Box *box = *(map.map_array + row) + col;
+            //设置周围颜色类型
+            box->topBoxColor = row? (*(map.map_array + row-1) + col)->boxColor.type : clr;
+            box->bottomBoxColor = row != map.rect.size.height-1? (*(map.map_array + row+1) + col)->boxColor.type : clr;
+            box->leftBoxColor = col? (*(map.map_array + row) + col-1)->boxColor.type : clr;
+            box->rightBoxColor = col != map.rect.size.width-1? (*(map.map_array + row) + col+1)->boxColor.type : clr;
+        }
+    }
+}
+
 
 void printMap(Map map)
 {

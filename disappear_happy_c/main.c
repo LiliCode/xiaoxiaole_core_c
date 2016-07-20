@@ -12,6 +12,7 @@
 int main(int argc, const char * argv[])
 {
     Map map = createMap();
+    initMap(map);
     
     printMap(map);
     

@@ -18,9 +18,16 @@
 //方格结构体
 struct box
 {
+    //基本属性
     Color boxColor; //颜色
     Point point;    //点坐标
     bool visible;   //是否可见
+    //附加属性，在查找的时候用
+    //这个方块周围的方块颜色类型
+    ColorType topBoxColor;
+    ColorType bottomBoxColor;
+    ColorType leftBoxColor;
+    ColorType rightBoxColor;
 };
 
 typedef struct box Box;
