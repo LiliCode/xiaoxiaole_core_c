@@ -16,6 +16,7 @@ int main(int argc, const char * argv[])
     
     printMap(map);
     
+    clickMapPoint(map, pointMake(4, 4));
     
     return 0;
 }
