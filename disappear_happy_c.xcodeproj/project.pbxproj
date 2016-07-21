@@ -12,6 +12,7 @@
 		02C23EC41D3E13B700D6C034 /* DHMap.c in Sources */ = {isa = PBXBuildFile; fileRef = 02C23EC21D3E13B700D6C034 /* DHMap.c */; };
 		02C23EC71D3E18C100D6C034 /* Color.c in Sources */ = {isa = PBXBuildFile; fileRef = 02C23EC51D3E18C100D6C034 /* Color.c */; };
 		02C23ECA1D3F66FE00D6C034 /* Rect.c in Sources */ = {isa = PBXBuildFile; fileRef = 02C23EC81D3F66FE00D6C034 /* Rect.c */; };
+		220146E11D410A2900D83FE0 /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = 220146DF1D410A2900D83FE0 /* Array.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +38,8 @@
 		02C23EC61D3E18C100D6C034 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
 		02C23EC81D3F66FE00D6C034 /* Rect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Rect.c; sourceTree = "<group>"; };
 		02C23EC91D3F66FE00D6C034 /* Rect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rect.h; sourceTree = "<group>"; };
+		220146DF1D410A2900D83FE0 /* Array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Array.c; sourceTree = "<group>"; };
+		220146E01D410A2900D83FE0 /* Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Array.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +77,8 @@
 				02C23EBF1D3E139F00D6C034 /* Box.c */,
 				02C23EC61D3E18C100D6C034 /* Color.h */,
 				02C23EC51D3E18C100D6C034 /* Color.c */,
+				220146E01D410A2900D83FE0 /* Array.h */,
+				220146DF1D410A2900D83FE0 /* Array.c */,
 				02C23EC91D3F66FE00D6C034 /* Rect.h */,
 				02C23EC81D3F66FE00D6C034 /* Rect.c */,
 				02C23EC31D3E13B700D6C034 /* DHMap.h */,
@@ -141,6 +146,7 @@
 				02C23ECA1D3F66FE00D6C034 /* Rect.c in Sources */,
 				02C23EC41D3E13B700D6C034 /* DHMap.c in Sources */,
 				02C23EB91D3E11A200D6C034 /* main.c in Sources */,
+				220146E11D410A2900D83FE0 /* Array.c in Sources */,
 				02C23EC11D3E139F00D6C034 /* Box.c in Sources */,
 				02C23EC71D3E18C100D6C034 /* Color.c in Sources */,
 			);
@@ -265,6 +271,7 @@
 				02C23EBE1D3E11A200D6C034 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

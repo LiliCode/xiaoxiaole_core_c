@@ -17,7 +17,13 @@ int main(int argc, const char * argv[])
     
     printMap(map);
     
-    clickMapPoint(map, pointMake(4, 4));
+    printf("\n");
+    
+    clickMapPoint(map, pointMake(5, 2));
+    
+//    printMap(map);
+    
+    
     
     return 0;
 }

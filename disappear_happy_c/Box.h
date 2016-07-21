@@ -28,6 +28,8 @@ struct box
     ColorType bottomBoxColor;
     ColorType leftBoxColor;
     ColorType rightBoxColor;
+    //flag表示用于是否已经查找过
+    bool foundFlag;
 };
 
 typedef struct box Box;
