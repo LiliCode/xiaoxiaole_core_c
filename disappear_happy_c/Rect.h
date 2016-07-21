@@ -49,6 +49,16 @@ typedef struct
  */
 Point pointMake(int x, int y);
 
+/**
+ *  比较两个点是否相等
+ *
+ *  @param p1 点1
+ *  @param p2 点2
+ *
+ *  @return 返回是否相等的结果 true相等
+ */
+bool equalToPoint(Point p1, Point p2);
+
 //区域结构体
 typedef struct
 {

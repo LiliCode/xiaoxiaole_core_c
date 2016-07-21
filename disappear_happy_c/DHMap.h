@@ -54,10 +54,11 @@ extern void clickMapPoint(Map map, Point point);
 /**
  *  消去方块
  *
- *  @param map   地图
- *  @param point 点击点
+ *  @param map        地图
+ *  @param touchPoint 点击点
+ *  @param fromPoint  从哪个点过来
  */
-void disapperBoxs(Map map, Point point);
+void disapperBoxs(Map map, Point touchPoint, Point fromPoint);
 
 /**
  *  打印地图

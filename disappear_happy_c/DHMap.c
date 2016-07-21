@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+
+
 /**
  *  全局地图数组
  */
@@ -21,7 +23,7 @@ Map createMap()
     Map map;
     map.rect = rectMake(pointMake(0, 0), sizeMake(MAP_SIZE, MAP_SIZE));
     map.map_array = mapArray;
-    
+
     //随机种子
     srand((unsigned)time(NULL));
     //颜色
@@ -33,7 +35,7 @@ Map createMap()
         {
             int color_index = rand() % (sizeof(colors) / sizeof(color_function));
             //创建box
-            Box box = createBox(colors[color_index](), pointMake(row, col), true);
+            Box box = createBox(colors[color_index](), pointMake(col, row), true);
             *(*(map.map_array + row) + col) = box;
         }
     }
@@ -81,36 +83,44 @@ void clickMapPoint(Map map, Point point)
     }
     
     //判断点击的box是否是无效的box
-    if ((*(map.map_array + point.x) + point.y)->boxColor.type == clr)
+    Box *clickBox = *(map.map_array + point.y) + point.x;
+    if (clickBox->boxColor.type == clr && !clickBox->visible)
     {
         return;
     }
     
     //如果点在地图中
-    disapperBoxs(map, point);
+    disapperBoxs(map, point, point);
 }
 
 
 
-void disapperBoxs(Map map, Point point)
+void disapperBoxs(Map map, Point touchPoint, Point fromPoint)
 {
-    Box *clickBox = *(map.map_array + point.x) + point.y;
+    Box *clickBox = *(map.map_array + touchPoint.y) + touchPoint.x;
     
-    if (clickBox->topBoxColor == clickBox->boxColor.type)
+    printf("boxColor.type = %d location = {%d , %d}\n",clickBox->boxColor.type, clickBox->point.x, clickBox->point.y);
+    
+    //递归调用查找相同颜色的方块
+    
+    if (clickBox->topBoxColor == clickBox->boxColor.type && fromPoint.y != touchPoint.y-1)
     {
-        
+        disapperBoxs(map, pointMake(touchPoint.x, touchPoint.y-1), touchPoint);
     }
-    else if (clickBox->bottomBoxColor == clickBox->boxColor.type)
+    
+    if (clickBox->bottomBoxColor == clickBox->boxColor.type && fromPoint.y != touchPoint.y+1)
     {
-        
+        disapperBoxs(map, pointMake(touchPoint.x, touchPoint.y+1), touchPoint);
     }
-    else if (clickBox->leftBoxColor == clickBox->boxColor.type)
+   
+    if (clickBox->leftBoxColor == clickBox->boxColor.type && fromPoint.x != touchPoint.x-1)
     {
-        
+        disapperBoxs(map, pointMake(touchPoint.x-1, touchPoint.y), touchPoint);
     }
-    else if (clickBox->rightBoxColor == clickBox->boxColor.type)
+    
+    if (clickBox->rightBoxColor == clickBox->boxColor.type && fromPoint.x != touchPoint.x+1)
     {
-        
+        disapperBoxs(map, pointMake(touchPoint.x+1, touchPoint.y), touchPoint);
     }
 }
 

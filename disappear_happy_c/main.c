@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include "DHMap.h"
 
+
 int main(int argc, const char * argv[])
 {
     Map map = createMap();
@@ -16,7 +17,16 @@ int main(int argc, const char * argv[])
     
     printMap(map);
     
+    printf("\n");
+    
+    clickMapPoint(map, pointMake(5, 2));
+    
+//    printMap(map);
+    
+    
     
     return 0;
 }
+
+
 
