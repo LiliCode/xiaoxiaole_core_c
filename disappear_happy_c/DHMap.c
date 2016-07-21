@@ -90,12 +90,12 @@ void clickMapPoint(Map map, Point point)
     }
     
     //如果点在地图中
-    disapperBoxs(map, point, point);
+    foundBoxs(map, point, point);
 }
 
 
 
-void disapperBoxs(Map map, Point touchPoint, Point fromPoint)
+void foundBoxs(Map map, Point touchPoint, Point fromPoint)
 {
     Box *clickBox = *(map.map_array + touchPoint.y) + touchPoint.x;
     
@@ -105,22 +105,22 @@ void disapperBoxs(Map map, Point touchPoint, Point fromPoint)
     
     if (clickBox->topBoxColor == clickBox->boxColor.type && fromPoint.y != touchPoint.y-1)
     {
-        disapperBoxs(map, pointMake(touchPoint.x, touchPoint.y-1), touchPoint);
+        foundBoxs(map, pointMake(touchPoint.x, touchPoint.y-1), touchPoint);
     }
     
     if (clickBox->bottomBoxColor == clickBox->boxColor.type && fromPoint.y != touchPoint.y+1)
     {
-        disapperBoxs(map, pointMake(touchPoint.x, touchPoint.y+1), touchPoint);
+        foundBoxs(map, pointMake(touchPoint.x, touchPoint.y+1), touchPoint);
     }
    
     if (clickBox->leftBoxColor == clickBox->boxColor.type && fromPoint.x != touchPoint.x-1)
     {
-        disapperBoxs(map, pointMake(touchPoint.x-1, touchPoint.y), touchPoint);
+        foundBoxs(map, pointMake(touchPoint.x-1, touchPoint.y), touchPoint);
     }
     
     if (clickBox->rightBoxColor == clickBox->boxColor.type && fromPoint.x != touchPoint.x+1)
     {
-        disapperBoxs(map, pointMake(touchPoint.x+1, touchPoint.y), touchPoint);
+        foundBoxs(map, pointMake(touchPoint.x+1, touchPoint.y), touchPoint);
     }
 }
 

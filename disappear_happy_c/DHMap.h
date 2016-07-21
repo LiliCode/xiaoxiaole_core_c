@@ -52,13 +52,13 @@ extern void initMap(Map map);
 extern void clickMapPoint(Map map, Point point);
 
 /**
- *  消去方块
+ *  找到相同的方块
  *
  *  @param map        地图
  *  @param touchPoint 点击点
  *  @param fromPoint  从哪个点过来
  */
-void disapperBoxs(Map map, Point touchPoint, Point fromPoint);
+void foundBoxs(Map map, Point touchPoint, Point fromPoint);
 
 /**
  *  打印地图
