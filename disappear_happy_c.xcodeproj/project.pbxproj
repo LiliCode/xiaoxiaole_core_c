@@ -72,7 +72,15 @@
 		02C23EB71D3E11A200D6C034 /* disappear_happy_c */ = {
 			isa = PBXGroup;
 			children = (
+				220146E21D412EA500D83FE0 /* Core */,
 				02C23EB81D3E11A200D6C034 /* main.c */,
+			);
+			path = disappear_happy_c;
+			sourceTree = "<group>";
+		};
+		220146E21D412EA500D83FE0 /* Core */ = {
+			isa = PBXGroup;
+			children = (
 				02C23EC01D3E139F00D6C034 /* Box.h */,
 				02C23EBF1D3E139F00D6C034 /* Box.c */,
 				02C23EC61D3E18C100D6C034 /* Color.h */,
@@ -84,7 +92,7 @@
 				02C23EC31D3E13B700D6C034 /* DHMap.h */,
 				02C23EC21D3E13B700D6C034 /* DHMap.c */,
 			);
-			path = disappear_happy_c;
+			name = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
