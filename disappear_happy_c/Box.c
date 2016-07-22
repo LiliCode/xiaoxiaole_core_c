@@ -36,11 +36,6 @@ Box *copyBox(Box *srcBox, const Box *desBox)
     srcBox->visible = desBox->visible;
     srcBox->foundFlag = desBox->foundFlag;
     
-    srcBox->topBoxColor = desBox->topBoxColor;
-    srcBox->bottomBoxColor = desBox->bottomBoxColor;
-    srcBox->leftBoxColor = desBox->leftBoxColor;
-    srcBox->rightBoxColor = desBox->rightBoxColor;
-    
     return srcBox;
 }
 

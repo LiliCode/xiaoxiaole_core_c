@@ -14,13 +14,13 @@
 int main(int argc, const char * argv[])
 {
     Map map = createMap();
-    initMap(map);
+//    initMap(map);
     
     printMap(map);
     
     printf("\n");
     
-    clickMapPoint(map, pointMake(2, 2));
+    clickMapPoint(map, pointMake(0, 0));
     
     printMap(map);
     

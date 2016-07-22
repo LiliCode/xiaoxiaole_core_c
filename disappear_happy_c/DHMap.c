@@ -107,22 +107,6 @@ Map createMap()
     return map;
 }
 
-void initMap(Map map)
-{
-    for(int row = 0; row < map.rect.size.height; row++)
-    {
-        for(int col = 0; col < map.rect.size.width; col++)
-        {
-            Box *box = *(map.map_array + row) + col;
-            //设置周围颜色类型
-            box->topBoxColor = row? (*(map.map_array + row-1) + col)->boxColor.type : clr;
-            box->bottomBoxColor = row != map.rect.size.height-1? (*(map.map_array + row+1) + col)->boxColor.type : clr;
-            box->leftBoxColor = col? (*(map.map_array + row) + col-1)->boxColor.type : clr;
-            box->rightBoxColor = col != map.rect.size.width-1? (*(map.map_array + row) + col+1)->boxColor.type : clr;
-        }
-    }
-}
-
 
 void printMap(Map map)
 {
@@ -148,7 +132,7 @@ void clickMapPoint(Map map, Point point)
     
     //判断点击的box是否是无效的box
     Box *clickBox = *(map.map_array + point.y) + point.x;
-    if (clickBox->boxColor.type == clr && !clickBox->visible)
+    if (!isVisible(clickBox))
     {
         return;
     }
@@ -173,8 +157,15 @@ void foundBoxs(Map map, Point touchPoint, Point fromPoint)
 #if Debug
     printf("boxColor.type = %d location = {%d , %d}\n",clickBox->boxColor.type, clickBox->point.x, clickBox->point.y);
 #endif
+    
+    //获取四个方向的相邻的方块类型 使用条件表达式判断是否在边界
+    ColorType topBoxColorType = touchPoint.y-1 >= 0? (*(map.map_array + touchPoint.y-1) + touchPoint.x)->boxColor.type : clr;
+    ColorType bottomBoxColorType = touchPoint.y+1 <= map.rect.size.height-1? (*(map.map_array + touchPoint.y+1) + touchPoint.x)->boxColor.type : clr;
+    ColorType leftBoxColorType = touchPoint.x-1 >= 0? (*(map.map_array + touchPoint.y) + touchPoint.x-1)->boxColor.type : clr;
+    ColorType rightBoxColorType = touchPoint.x+1 <= map.rect.size.width-1? (*(map.map_array + touchPoint.y) + touchPoint.x+1)->boxColor.type : clr;
+    
     //向上查找
-    if (clickBox->topBoxColor == clickBox->boxColor.type && fromPoint.y != touchPoint.y-1)
+    if (topBoxColorType == clickBox->boxColor.type && fromPoint.y != touchPoint.y-1)
     {
         //判断下一个box是否被查找过
         if (!(*(map.map_array + touchPoint.y-1) + touchPoint.x)->foundFlag)
@@ -184,7 +175,7 @@ void foundBoxs(Map map, Point touchPoint, Point fromPoint)
         }
     }
     //向下查找
-    if (clickBox->bottomBoxColor == clickBox->boxColor.type && fromPoint.y != touchPoint.y+1)
+    if (bottomBoxColorType == clickBox->boxColor.type && fromPoint.y != touchPoint.y+1)
     {
         if (!(*(map.map_array + touchPoint.y+1) + touchPoint.x)->foundFlag)
         {
@@ -192,7 +183,7 @@ void foundBoxs(Map map, Point touchPoint, Point fromPoint)
         }
     }
     //向左查找
-    if (clickBox->leftBoxColor == clickBox->boxColor.type && fromPoint.x != touchPoint.x-1)
+    if (leftBoxColorType == clickBox->boxColor.type && fromPoint.x != touchPoint.x-1)
     {
         if (!(*(map.map_array + touchPoint.y) + touchPoint.x-1)->foundFlag)
         {
@@ -200,7 +191,7 @@ void foundBoxs(Map map, Point touchPoint, Point fromPoint)
         }
     }
     //向右查找
-    if (clickBox->rightBoxColor == clickBox->boxColor.type && fromPoint.x != touchPoint.x+1)
+    if (rightBoxColorType == clickBox->boxColor.type && fromPoint.x != touchPoint.x+1)
     {
         if (!(*(map.map_array + touchPoint.y) + touchPoint.x+1)->foundFlag)
         {

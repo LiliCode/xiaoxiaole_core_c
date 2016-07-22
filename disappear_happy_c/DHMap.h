@@ -39,13 +39,6 @@ typedef struct map Map;
 extern Map createMap();
 
 /**
- *  初始化地图
- *
- *  @param map  地图
- */
-extern void initMap(Map map);
-
-/**
  *  点击地图上的点
  *
  *  @param map   地图

@@ -22,14 +22,7 @@ struct box
     Color boxColor; //颜色
     Point point;    //点坐标
     bool visible;   //是否可见
-    //附加属性，在查找的时候用
-    //这个方块周围的方块颜色类型
-    ColorType topBoxColor;
-    ColorType bottomBoxColor;
-    ColorType leftBoxColor;
-    ColorType rightBoxColor;
-    //flag表示用于是否已经查找过
-    bool foundFlag;
+    bool foundFlag; //flag表示用于是否已经查找过
 };
 
 typedef struct box Box;
