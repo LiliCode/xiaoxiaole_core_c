@@ -234,9 +234,7 @@ void destroyBoxCallback(Map map, Point location)
     //销毁箱子
     Box *box = *(map.map_array + location.y) + location.x;
     //不可见
-    box->visible = false;
-    //无色
-    box->boxColor = clearColor();
+    invisible(box);
 }
 
 void destroyBoxs(Map map, Array *boxLocations)
@@ -309,7 +307,39 @@ void moveBoxs(Map map, Array *boxLocations)
     printf("minRow = %d maxRow = %d\n",minX, maxX);
 #endif
     
-    
+    for (int px = minX; px <= maxX; px++)
+    {
+        for (int py = map.rect.size.height-1; py >= 0; py--)
+        {
+            Box *box = *(map.map_array + py) + px;
+            if (isVisible(box))
+            {
+                continue;   //如果箱子可见，就跳到上面的箱子
+            }
+            
+            //源箱子不可见
+            //找到显示的箱子交换
+            for (int pyy = py-1; pyy >= 0; pyy--)
+            {
+                Box *desBox = *(map.map_array + pyy) + px;
+                if (!isVisible(desBox))
+                {
+                    continue;   //如果箱子不可见，就跳到上面的箱子
+                }
+                
+                //目标箱子可见
+                //交换
+                Box *tempBox = box;
+                copyBox(box, desBox);
+                copyBox(desBox, tempBox);
+#if Debug
+                printMap(map);
+                printf("\n");
+#endif
+                break;
+            }
+        }
+    }
 }
 
 

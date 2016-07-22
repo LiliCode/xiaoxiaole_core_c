@@ -45,6 +45,16 @@ typedef struct box Box;
 Box createBox(Color color, Point point, bool visible);
 
 /**
+ *  复制箱子
+ *
+ *  @param srcBox 需要替换的箱子
+ *  @param desBox 被复制的箱子
+ *
+ *  @return 返回新的副本
+ */
+Box *copyBox(Box *srcBox, const Box *desBox);
+
+/**
  *  使箱子不可见
  *
  *  @param box 传入box指针
@@ -52,12 +62,13 @@ Box createBox(Color color, Point point, bool visible);
 void invisible(Box *box);
 
 /**
- *  使箱子可见
+ *  是否可见
  *
- *  @param box 传入box指针
+ *  @param box 箱子
+ *
+ *  @return 返回true 可见， false不可见
  */
-void visible(Box *box);
-
+bool isVisible(const Box *box);
 
 
 #endif /* Box_h */
