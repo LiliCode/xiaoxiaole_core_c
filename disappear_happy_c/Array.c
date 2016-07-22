@@ -235,7 +235,24 @@ Point elementAtIndex(Array *array, unsigned long index)
         return pointMake(-1, -1);
     }
     
-    return pointMake(0, 0);
+    Element *tempNode = array->pArray;
+    unsigned long count = 0;
+    Point point;
+    while (tempNode)
+    {
+        //判断
+        if (count == index)
+        {
+            point = tempNode->element;
+            break;
+        }
+        
+        //计数
+        count++;
+        tempNode = tempNode->next;
+    }
+    
+    return point;
 }
 
 /**
