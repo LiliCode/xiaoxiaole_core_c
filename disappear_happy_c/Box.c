@@ -16,6 +16,7 @@ Box createBox(Color color, Point point, bool visible)
     box.boxColor = color;
     box.point = point;
     box.visible = true;
+    box.foundFlag = false;
     
     return box;
 }

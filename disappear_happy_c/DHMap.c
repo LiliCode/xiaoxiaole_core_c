@@ -11,6 +11,7 @@
 #include <time.h>
 
 
+#define Debug (1)   //调试
 
 /**
  *  全局地图数组
@@ -97,27 +98,29 @@ void clickMapPoint(Map map, Point point)
 
 void foundBoxs(Map map, Point touchPoint, Point fromPoint)
 {
+    //获取触摸点的box
     Box *clickBox = *(map.map_array + touchPoint.y) + touchPoint.x;
-    
+    //已经找到过一次
+    clickBox->foundFlag = true;
+#if Debug
     printf("boxColor.type = %d location = {%d , %d}\n",clickBox->boxColor.type, clickBox->point.x, clickBox->point.y);
-    
-    //递归调用查找相同颜色的方块
-    
+#endif
+    //向上查找
     if (clickBox->topBoxColor == clickBox->boxColor.type && fromPoint.y != touchPoint.y-1)
     {
         foundBoxs(map, pointMake(touchPoint.x, touchPoint.y-1), touchPoint);
     }
-    
+    //向下查找
     if (clickBox->bottomBoxColor == clickBox->boxColor.type && fromPoint.y != touchPoint.y+1)
     {
         foundBoxs(map, pointMake(touchPoint.x, touchPoint.y+1), touchPoint);
     }
-   
+    //向左查找
     if (clickBox->leftBoxColor == clickBox->boxColor.type && fromPoint.x != touchPoint.x-1)
     {
         foundBoxs(map, pointMake(touchPoint.x-1, touchPoint.y), touchPoint);
     }
-    
+    //向右查找
     if (clickBox->rightBoxColor == clickBox->boxColor.type && fromPoint.x != touchPoint.x+1)
     {
         foundBoxs(map, pointMake(touchPoint.x+1, touchPoint.y), touchPoint);
