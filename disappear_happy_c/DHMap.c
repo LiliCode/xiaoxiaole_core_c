@@ -244,6 +244,12 @@ void destroyBoxs(Map map, Array *boxLocations)
     {
         //遍历位置
         enumerateLocations(map, boxLocations, destroyBoxCallback);
+        
+#if Debug
+        printMap(map);
+        printf("\n");
+#endif
+        
         //向下移动或向左移动
         moveBoxs(map, boxLocations);
         //删除数组全部元素
@@ -329,13 +335,11 @@ void moveBoxs(Map map, Array *boxLocations)
                 
                 //目标箱子可见
                 //交换
-                Box *tempBox = box;
+                Box tempBox;
+                copyBox(&tempBox, box);
                 copyBox(box, desBox);
-                copyBox(desBox, tempBox);
-#if Debug
-                printMap(map);
-                printf("\n");
-#endif
+                copyBox(desBox, &tempBox);
+                
                 break;
             }
         }
