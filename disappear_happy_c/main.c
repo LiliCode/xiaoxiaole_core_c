@@ -24,6 +24,10 @@ int main(int argc, const char * argv[])
     
     printMap(map);
     
+    clickMapPoint(map, pointMake(5, 5));
+    
+    printMap(map);
+    
 //    Array *array = createArray();
 //    
 //    addElement(array, pointMake(0, 0));
