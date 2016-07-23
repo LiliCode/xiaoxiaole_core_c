@@ -8,12 +8,17 @@
 
 #include <stdio.h>
 #include "DHMap.h"
-#include "Array.h"
 
+
+
+void alertMessage(String msg, MsgCode code)
+{
+    printf("callback msg -> %s  msg code -> %d\n", msg, code);
+}
 
 int main(int argc, const char * argv[])
 {
-    Map map = createMap();
+    Map map = createMap(alertMessage);
 //    initMap(map);
     
     printMap(map);

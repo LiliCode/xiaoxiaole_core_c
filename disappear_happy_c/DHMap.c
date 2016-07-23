@@ -29,7 +29,7 @@ Array *foundBoxList;
  *
  *  @param map        地图
  *  @param touchPoint 点击点
- *  @param fromPoint  从哪个点过来
+ *  @param fromPoint  从哪个点过来，当前点击点就传入当前点位置
  */
 void foundBoxs(Map map, Point touchPoint, Point fromPoint);
 
@@ -78,13 +78,14 @@ void destroyBoxCallback(Map map, Point location);
 
 
 
-Map createMap()
+Map createMap(pAlert msgCallback)
 {
     //初始化地图
     Map map;
     map.rect = rectMake(pointMake(0, 0), sizeMake(MAP_SIZE, MAP_SIZE));
     map.map_array = mapArray;
-
+    map.alert = msgCallback;    //消息回调
+    
     //随机种子
     srand((unsigned)time(NULL));
     //颜色
@@ -127,6 +128,7 @@ void clickMapPoint(Map map, Point point)
     //判断是否在点击范围内
     if (!rectContainsPoint(map.rect, point))
     {
+        if (map.alert) map.alert("点击在地图区域外!", ClickOutsideRect);
         return;
     }
     
@@ -134,6 +136,7 @@ void clickMapPoint(Map map, Point point)
     Box *clickBox = *(map.map_array + point.y) + point.x;
     if (!isVisible(clickBox))
     {
+        if (map.alert) map.alert("点击了无效方块!", ClickInvalid);
         return;
     }
     
@@ -205,7 +208,9 @@ void enumerateLocations(Map map, Array *locations, void (*callback)(Map map, Poi
 {
     if (!locations || !locations->pArray)
     {
+#if Debug
         printf("数组为空!\n");
+#endif
         return;
     }
     
@@ -233,6 +238,7 @@ void destroyBoxs(Map map, Array *boxLocations)
     //必须要用两个或两个以上的箱子才能消失
     if (boxLocations->count >= 2)
     {
+        if (map.alert) map.alert("方块将要消失!", BoxWillDisapper);
         //遍历位置
         enumerateLocations(map, boxLocations, destroyBoxCallback);
         
@@ -241,10 +247,12 @@ void destroyBoxs(Map map, Array *boxLocations)
         printf("\n");
 #endif
         
-        //向下移动或向左移动
+        //向下移动或向左移动填补空缺位置
         moveBoxs(map, boxLocations);
-        //删除数组全部元素
+        //删除数组保存的相同颜色方块的位置
         removeAllElement(boxLocations);
+        
+        if (map.alert) map.alert("方块已经消失!", BoxDidDisapper);
     }
     else
     {
@@ -252,9 +260,8 @@ void destroyBoxs(Map map, Array *boxLocations)
         Point location = elementAtIndex(boxLocations, 0);
         Box *box = *(map.map_array + location.y) + location.x;
         box->foundFlag = false; //重置找到标示
-#if Debug
-        printf("function destroyBoxs -> 没有箱子可以消失!\n");
-#endif
+        //消息回调
+        if (map.alert) map.alert("没有可以消失的方块!", ClickInvalid);
         //删除数组全部元素
         removeAllElement(boxLocations);
     }
