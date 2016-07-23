@@ -76,16 +76,15 @@ void enumerateLocations(Map map, Array *locations, void (*callback)(Map map, Poi
  */
 void destroyBoxCallback(Map map, Point location);
 
+/**
+ 初始化地图
+ 
+ - returns: 返回空
+ */
+void initMap(Map map);
 
-
-Map createMap(pAlert msgCallback)
+void initMap(Map map)
 {
-    //初始化地图
-    Map map;
-    map.rect = rectMake(pointMake(0, 0), sizeMake(MAP_SIZE, MAP_SIZE));
-    map.map_array = mapArray;
-    map.alert = msgCallback;    //消息回调
-    
     //随机种子
     srand((unsigned)time(NULL));
     //颜色
@@ -101,6 +100,19 @@ Map createMap(pAlert msgCallback)
             *(*(map.map_array + row) + col) = box;
         }
     }
+}
+
+
+Map createMap(pAlert msgCallback)
+{
+    //初始化地图
+    Map map;
+    map.rect = rectMake(pointMake(0, 0), sizeMake(MAP_SIZE, MAP_SIZE));
+    map.map_array = mapArray;
+    map.alert = msgCallback;    //消息回调
+    
+    //初始化地图
+    initMap(map);
     
     //初始化存放同种颜色箱子位置的数组
     foundBoxList = createArray();
@@ -108,6 +120,39 @@ Map createMap(pAlert msgCallback)
     return map;
 }
 
+/**
+ *  重置地图
+ *
+ *  @param map 地图
+ */
+extern void resetMap(Map map)
+{
+    //删除选中数组的全部元素
+    removeAllElement(foundBoxList);
+    //重新初始化地图
+    initMap(map);
+}
+
+/**
+ *  删除地图
+ *
+ *  @param map 地图
+ */
+extern void deleteMap(Map map)
+{
+    //删除存放同种颜色数组
+    deleteArray(foundBoxList);
+    //清除地图
+    for(int row = 0; row < map.rect.size.height; row++)
+    {
+        for(int col = 0; col < map.rect.size.width; col++)
+        {
+            //创建box
+            Box box = createBox(clearColor(), pointMake(col, row), false);
+            *(*(map.map_array + row) + col) = box;
+        }
+    }
+}
 
 void printMap(Map map)
 {

@@ -56,6 +56,20 @@ typedef struct map Map;
 extern Map createMap(pAlert msgCallback);
 
 /**
+ *  重置地图
+ *
+ *  @param map 地图
+ */
+extern void resetMap(Map map);
+
+/**
+ *  删除地图
+ *
+ *  @param map 地图
+ */
+extern void deleteMap(Map map);
+
+/**
  *  点击地图上的点
  *
  *  @param map   地图
