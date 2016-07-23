@@ -9,7 +9,7 @@
 #include "Box.h"
 
 
-Box createBox(Color color, Point point, bool visible)
+Box createBox(Color color, DHPoint point, bool visible)
 {
     Box box;
     

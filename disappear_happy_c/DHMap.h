@@ -39,7 +39,7 @@ typedef void (*pAlert)(String msg, MsgCode code);
 //地图结构
 struct map
 {
-    Rect rect;  //大小和位置
+    DHRect rect;  //大小和位置
     MapArray map_array; //列表
     //消息回调
     pAlert alert;
@@ -75,7 +75,7 @@ extern void deleteMap(Map map);
  *  @param map   地图
  *  @param point 点击位置
  */
-extern void clickMapPoint(Map map, Point point);
+extern void clickMapPoint(Map map, DHPoint point);
 
 /**
  *  打印地图

@@ -65,29 +65,29 @@ typedef Color (*color_function)();  //颜色值的函数指针
 
 
 //无色
-Color clearColor();
+extern Color clearColor();
 //白色
-Color whiteColor();
+extern Color whiteColor();
 //黑色
-Color blackColor();
+extern Color blackColor();
 //红色
-Color redColor();
+extern Color redColor();
 //绿色
-Color greenColor();
+extern Color greenColor();
 //蓝色
-Color blueColor();
+extern Color blueColor();
 //蓝绿色
-Color cyanColor();
+extern Color cyanColor();
 //黄色
-Color yellowColor();
+extern Color yellowColor();
 //品红
-Color magentaColor();
+extern Color magentaColor();
 //橙色
-Color orangeColor();
+extern Color orangeColor();
 //紫色
-Color purpleColor();
+extern Color purpleColor();
 //棕色
-Color brownColor();
+extern Color brownColor();
 
 /**
  *  根据RGB三基色设置颜色
@@ -99,14 +99,14 @@ Color brownColor();
  *
  *  @return 返回颜色结构
  */
-Color colorWithRGB(double R, double G, double B, double alpha);
+extern Color colorWithRGB(double R, double G, double B, double alpha);
 
 /**
  *  打印颜色
  *
  *  @param color 传入需要打印的颜色
  */
-void printColor(const Color color);
+extern void printColor(const Color color);
 
 
 #endif /* Color_h */

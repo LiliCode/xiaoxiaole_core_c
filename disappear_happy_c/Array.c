@@ -16,9 +16,9 @@
  *
  *  @return 返回元素节点
  */
-Element *allocElementNode(Point element);
+Element *allocElementNode(DHPoint element);
 
-Element *allocElementNode(Point element)
+Element *allocElementNode(DHPoint element)
 {
     Element *elementNode = (Element *)malloc(sizeof(Element));
     if (!elementNode)
@@ -100,7 +100,7 @@ void printArray(Array *array)
  *  @param array   当前数组
  *  @param element 要添加的元素
  */
-void addElement(Array *array, Point element)
+void addElement(Array *array, DHPoint element)
 {
     if (!array)
     {
@@ -139,7 +139,7 @@ void addElement(Array *array, Point element)
  *  @param array   当前数组
  *  @param element 要删除的元素
  */
-void removeElement(Array *array, Point element)
+void removeElement(Array *array, DHPoint element)
 {
     if (!array || !array->pArray)
     {
@@ -227,7 +227,7 @@ void removeAllElement(Array *array)
  *
  *  @return 返回index位置的元素
  */
-Point elementAtIndex(Array *array, unsigned long index)
+DHPoint elementAtIndex(Array *array, unsigned long index)
 {
     if (!array || !array->pArray)
     {
@@ -237,7 +237,7 @@ Point elementAtIndex(Array *array, unsigned long index)
     
     Element *tempNode = array->pArray;
     unsigned long count = 0;
-    Point point;
+    DHPoint point;
     while (tempNode)
     {
         //判断

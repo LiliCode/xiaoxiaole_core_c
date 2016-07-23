@@ -20,7 +20,7 @@ struct box
 {
     //基本属性
     Color boxColor; //颜色
-    Point point;    //点坐标
+    DHPoint point;    //点坐标
     bool visible;   //是否可见
     bool foundFlag; //flag表示用于是否已经查找过
 };
@@ -35,7 +35,7 @@ typedef struct box Box;
  *
  *  @return 返回box
  */
-Box createBox(Color color, Point point, bool visible);
+extern Box createBox(Color color, DHPoint point, bool visible);
 
 /**
  *  复制箱子
@@ -45,14 +45,14 @@ Box createBox(Color color, Point point, bool visible);
  *
  *  @return 返回新的副本
  */
-Box *copyBox(Box *srcBox, const Box *desBox);
+extern Box *copyBox(Box *srcBox, const Box *desBox);
 
 /**
  *  使箱子不可见
  *
  *  @param box 传入box指针
  */
-void invisible(Box *box);
+extern void invisible(Box *box);
 
 /**
  *  是否可见
@@ -61,7 +61,7 @@ void invisible(Box *box);
  *
  *  @return 返回true 可见， false不可见
  */
-bool isVisible(const Box *box);
+extern bool isVisible(const Box *box);
 
 
 #endif /* Box_h */

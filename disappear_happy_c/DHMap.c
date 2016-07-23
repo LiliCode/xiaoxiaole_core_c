@@ -31,7 +31,7 @@ Array *foundBoxList;
  *  @param touchPoint 点击点
  *  @param fromPoint  从哪个点过来，当前点击点就传入当前点位置
  */
-void foundBoxs(Map map, Point touchPoint, Point fromPoint);
+void foundBoxs(Map map, DHPoint touchPoint, DHPoint fromPoint);
 
 /**
  *  使同种颜色的箱子消失
@@ -66,7 +66,7 @@ int extremum(Array *locations, bool (*compare)(int value1, int value2));
  *  @param locations 同种颜色箱子的位置
  *  @param callback  回调函数
  */
-void enumerateLocations(Map map, Array *locations, void (*callback)(Map map, Point location));
+void enumerateLocations(Map map, Array *locations, void (*callback)(Map map, DHPoint location));
 
 /**
  *  箱子消失的回调函数
@@ -74,7 +74,7 @@ void enumerateLocations(Map map, Array *locations, void (*callback)(Map map, Poi
  *  @param map      游戏地图
  *  @param location 传出位置
  */
-void destroyBoxCallback(Map map, Point location);
+void destroyBoxCallback(Map map, DHPoint location);
 
 /**
  初始化地图
@@ -168,7 +168,7 @@ void printMap(Map map)
 }
 
 
-void clickMapPoint(Map map, Point point)
+void clickMapPoint(Map map, DHPoint point)
 {
     //判断是否在点击范围内
     if (!rectContainsPoint(map.rect, point))
@@ -194,7 +194,7 @@ void clickMapPoint(Map map, Point point)
 
 
 
-void foundBoxs(Map map, Point touchPoint, Point fromPoint)
+void foundBoxs(Map map, DHPoint touchPoint, DHPoint fromPoint)
 {
     //获取触摸点的box
     Box *clickBox = *(map.map_array + touchPoint.y) + touchPoint.x;
@@ -249,7 +249,7 @@ void foundBoxs(Map map, Point touchPoint, Point fromPoint)
 }
 
 
-void enumerateLocations(Map map, Array *locations, void (*callback)(Map map, Point location))
+void enumerateLocations(Map map, Array *locations, void (*callback)(Map map, DHPoint location))
 {
     if (!locations || !locations->pArray)
     {
@@ -270,7 +270,7 @@ void enumerateLocations(Map map, Array *locations, void (*callback)(Map map, Poi
     }
 }
 
-void destroyBoxCallback(Map map, Point location)
+void destroyBoxCallback(Map map, DHPoint location)
 {
     //销毁箱子
     Box *box = *(map.map_array + location.y) + location.x;
@@ -302,7 +302,7 @@ void destroyBoxs(Map map, Array *boxLocations)
     else
     {
         //只有一个箱子的时候
-        Point location = elementAtIndex(boxLocations, 0);
+        DHPoint location = elementAtIndex(boxLocations, 0);
         Box *box = *(map.map_array + location.y) + location.x;
         box->foundFlag = false; //重置找到标示
         //消息回调
