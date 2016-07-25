@@ -207,7 +207,7 @@ void removeAllElement(Array *array)
     {
         array->pArray = tempNode->next; //头节点指向第二个节点
         free(tempNode);
-        tempNode = tempNode->next;
+        tempNode = array->pArray;
         array->count--;
 #if Debug
         printf("\n");
