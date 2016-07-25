@@ -17,7 +17,7 @@ typedef unsigned long ArrayCount;
 //元素结构
 struct element
 {
-    Point element;
+    DHPoint element;
     struct element *next;   //下一个节点
 };
 
@@ -38,21 +38,21 @@ typedef struct array Array;
  *
  *  @return 返回数组
  */
-Array *createArray();
+extern Array *createArray();
 
 /**
  *  删除数组
  *
  *  @param array 需要删除的数组
  */
-void deleteArray(Array *array);
+extern void deleteArray(Array *array);
 
 /**
  *  打印数组元素
  *
  *  @param array 当前数组
  */
-void printArray(Array *array);
+extern void printArray(Array *array);
 
 
 /**
@@ -61,7 +61,7 @@ void printArray(Array *array);
  *  @param array   当前数组
  *  @param element 要添加的元素
  */
-void addElement(Array *array, Point element);
+extern void addElement(Array *array, DHPoint element);
 
 /**
  *  删除数组中的元素
@@ -69,14 +69,14 @@ void addElement(Array *array, Point element);
  *  @param array   当前数组
  *  @param element 要删除的元素
  */
-void removeElement(Array *array, Point element);
+extern void removeElement(Array *array, DHPoint element);
 
 /**
  *  删除数组中的全部元素
  *
  *  @param array 当前数组
  */
-void removeAllElement(Array *array);
+extern void removeAllElement(Array *array);
 
 /**
  *  获取数组index位置的元素
@@ -86,7 +86,7 @@ void removeAllElement(Array *array);
  *
  *  @return 返回index位置的元素
  */
-Point elementAtIndex(Array *array, unsigned long index);
+extern DHPoint elementAtIndex(Array *array, unsigned long index);
 
 /**
  *  删除数组index位置的元素
@@ -94,7 +94,7 @@ Point elementAtIndex(Array *array, unsigned long index);
  *  @param array 当前数组
  *  @param index 删除的位置
  */
-void removeElementAtIndex(Array *array, unsigned long index);
+extern void removeElementAtIndex(Array *array, unsigned long index);
 
 
 #endif /* Array_h */

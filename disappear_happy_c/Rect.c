@@ -9,7 +9,7 @@
 #include "Rect.h"
 
 
-bool rectContainsPoint(Rect rect, Point point)
+bool rectContainsPoint(DHRect rect, DHPoint point)
 {
     if (point.x < rect.origin.x || point.y < rect.origin.y ||
         point.x > (rect.origin.x + rect.size.width) || point.y > (rect.origin.y + rect.size.height))
@@ -21,9 +21,9 @@ bool rectContainsPoint(Rect rect, Point point)
 }
 
 
-Size sizeMake(double width, double height)
+DHSize sizeMake(double width, double height)
 {
-    Size size;
+    DHSize size;
     
     size.width = width;
     size.height = height;
@@ -31,9 +31,9 @@ Size sizeMake(double width, double height)
     return size;
 }
 
-Point pointMake(int x, int y)
+DHPoint pointMake(int x, int y)
 {
-    Point point;
+    DHPoint point;
     
     point.x = x;
     point.y = y;
@@ -41,15 +41,15 @@ Point pointMake(int x, int y)
     return point;
 }
 
-bool equalToPoint(Point p1, Point p2)
+bool equalToPoint(DHPoint p1, DHPoint p2)
 {
     return p1.x == p2.x && p1.y == p2.y;
 }
 
 
-Rect rectMake(Point point, Size size)
+DHRect rectMake(DHPoint point, DHSize size)
 {
-    Rect rect;
+    DHRect rect;
     
     rect.origin = point;
     rect.size = size;

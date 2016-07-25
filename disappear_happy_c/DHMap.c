@@ -29,9 +29,9 @@ Array *foundBoxList;
  *
  *  @param map        地图
  *  @param touchPoint 点击点
- *  @param fromPoint  从哪个点过来
+ *  @param fromPoint  从哪个点过来，当前点击点就传入当前点位置
  */
-void foundBoxs(Map map, Point touchPoint, Point fromPoint);
+void foundBoxs(Map map, DHPoint touchPoint, DHPoint fromPoint);
 
 /**
  *  使同种颜色的箱子消失
@@ -66,7 +66,7 @@ int extremum(Array *locations, bool (*compare)(int value1, int value2));
  *  @param locations 同种颜色箱子的位置
  *  @param callback  回调函数
  */
-void enumerateLocations(Map map, Array *locations, void (*callback)(Map map, Point location));
+void enumerateLocations(Map map, Array *locations, void (*callback)(Map map, DHPoint location));
 
 /**
  *  箱子消失的回调函数
@@ -74,17 +74,17 @@ void enumerateLocations(Map map, Array *locations, void (*callback)(Map map, Poi
  *  @param map      游戏地图
  *  @param location 传出位置
  */
-void destroyBoxCallback(Map map, Point location);
+void destroyBoxCallback(Map map, DHPoint location);
 
+/**
+ 初始化地图
+ 
+ - returns: 返回空
+ */
+void initMap(Map map);
 
-
-Map createMap()
+void initMap(Map map)
 {
-    //初始化地图
-    Map map;
-    map.rect = rectMake(pointMake(0, 0), sizeMake(MAP_SIZE, MAP_SIZE));
-    map.map_array = mapArray;
-
     //随机种子
     srand((unsigned)time(NULL));
     //颜色
@@ -100,6 +100,19 @@ Map createMap()
             *(*(map.map_array + row) + col) = box;
         }
     }
+}
+
+
+Map createMap(pAlert msgCallback)
+{
+    //初始化地图
+    Map map;
+    map.rect = rectMake(pointMake(0, 0), sizeMake(MAP_SIZE, MAP_SIZE));
+    map.map_array = mapArray;
+    map.alert = msgCallback;    //消息回调
+    
+    //初始化地图
+    initMap(map);
     
     //初始化存放同种颜色箱子位置的数组
     foundBoxList = createArray();
@@ -107,6 +120,39 @@ Map createMap()
     return map;
 }
 
+/**
+ *  重置地图
+ *
+ *  @param map 地图
+ */
+extern void resetMap(Map map)
+{
+    //删除选中数组的全部元素
+    removeAllElement(foundBoxList);
+    //重新初始化地图
+    initMap(map);
+}
+
+/**
+ *  删除地图
+ *
+ *  @param map 地图
+ */
+extern void deleteMap(Map map)
+{
+    //删除存放同种颜色数组
+    deleteArray(foundBoxList);
+    //清除地图
+    for(int row = 0; row < map.rect.size.height; row++)
+    {
+        for(int col = 0; col < map.rect.size.width; col++)
+        {
+            //创建box
+            Box box = createBox(clearColor(), pointMake(col, row), false);
+            *(*(map.map_array + row) + col) = box;
+        }
+    }
+}
 
 void printMap(Map map)
 {
@@ -122,11 +168,12 @@ void printMap(Map map)
 }
 
 
-void clickMapPoint(Map map, Point point)
+void clickMapPoint(Map map, DHPoint point)
 {
     //判断是否在点击范围内
     if (!rectContainsPoint(map.rect, point))
     {
+        if (map.alert) map.alert("点击在地图区域外!", ClickOutsideRect);
         return;
     }
     
@@ -134,6 +181,7 @@ void clickMapPoint(Map map, Point point)
     Box *clickBox = *(map.map_array + point.y) + point.x;
     if (!isVisible(clickBox))
     {
+        if (map.alert) map.alert("点击了无效方块!", ClickInvalid);
         return;
     }
     
@@ -146,7 +194,7 @@ void clickMapPoint(Map map, Point point)
 
 
 
-void foundBoxs(Map map, Point touchPoint, Point fromPoint)
+void foundBoxs(Map map, DHPoint touchPoint, DHPoint fromPoint)
 {
     //获取触摸点的box
     Box *clickBox = *(map.map_array + touchPoint.y) + touchPoint.x;
@@ -201,11 +249,13 @@ void foundBoxs(Map map, Point touchPoint, Point fromPoint)
 }
 
 
-void enumerateLocations(Map map, Array *locations, void (*callback)(Map map, Point location))
+void enumerateLocations(Map map, Array *locations, void (*callback)(Map map, DHPoint location))
 {
     if (!locations || !locations->pArray)
     {
+#if Debug
         printf("数组为空!\n");
+#endif
         return;
     }
     
@@ -220,7 +270,7 @@ void enumerateLocations(Map map, Array *locations, void (*callback)(Map map, Poi
     }
 }
 
-void destroyBoxCallback(Map map, Point location)
+void destroyBoxCallback(Map map, DHPoint location)
 {
     //销毁箱子
     Box *box = *(map.map_array + location.y) + location.x;
@@ -233,6 +283,7 @@ void destroyBoxs(Map map, Array *boxLocations)
     //必须要用两个或两个以上的箱子才能消失
     if (boxLocations->count >= 2)
     {
+        if (map.alert) map.alert("方块将要消失!", BoxWillDisapper);
         //遍历位置
         enumerateLocations(map, boxLocations, destroyBoxCallback);
         
@@ -241,20 +292,21 @@ void destroyBoxs(Map map, Array *boxLocations)
         printf("\n");
 #endif
         
-        //向下移动或向左移动
+        //向下移动或向左移动填补空缺位置
         moveBoxs(map, boxLocations);
-        //删除数组全部元素
+        //删除数组保存的相同颜色方块的位置
         removeAllElement(boxLocations);
+        
+        if (map.alert) map.alert("方块已经消失!", BoxDidDisapper);
     }
     else
     {
         //只有一个箱子的时候
-        Point location = elementAtIndex(boxLocations, 0);
+        DHPoint location = elementAtIndex(boxLocations, 0);
         Box *box = *(map.map_array + location.y) + location.x;
         box->foundFlag = false; //重置找到标示
-#if Debug
-        printf("function destroyBoxs -> 没有箱子可以消失!\n");
-#endif
+        //消息回调
+        if (map.alert) map.alert("没有可以消失的方块!", ClickInvalid);
         //删除数组全部元素
         removeAllElement(boxLocations);
     }
