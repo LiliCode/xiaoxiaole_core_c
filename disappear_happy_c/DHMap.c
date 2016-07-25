@@ -42,12 +42,12 @@ void foundBoxs(Map map, DHPoint touchPoint, DHPoint fromPoint);
 void destroyBoxs(Map map, Array *boxLocations);
 
 /**
- *  移动箱子
+ *  箱子下落
  *
  *  @param map          地图
  *  @param boxLocations 位置
  */
-void moveBoxs(Map map, Array *boxLocations);
+void fallBoxs(Map map, Array *boxLocations);
 
 /**
  *  求最值
@@ -293,7 +293,7 @@ void destroyBoxs(Map map, Array *boxLocations)
 #endif
         
         //向下移动或向左移动填补空缺位置
-        moveBoxs(map, boxLocations);
+        fallBoxs(map, boxLocations);
         //删除数组保存的相同颜色方块的位置
         removeAllElement(boxLocations);
         
@@ -347,7 +347,7 @@ int extremum(Array *locations, bool (*compare)(int value1, int value2))
 }
 
 
-void moveBoxs(Map map, Array *boxLocations)
+void fallBoxs(Map map, Array *boxLocations)
 {
     //找最大最小列
     int maxX = extremum(boxLocations, compareMax);
