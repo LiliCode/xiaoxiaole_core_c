@@ -13,6 +13,8 @@
 
 #define Debug (1)   //调试
 
+#define NONE_COL   (-1)    //没找到空列
+
 /**
  *  全局地图数组
  */
@@ -48,6 +50,25 @@ void destroyBoxs(Map map, Array *boxLocations);
  *  @param boxLocations 位置
  */
 void fallBoxs(Map map, Array *boxLocations);
+
+/**
+ *  消除空行
+ *
+ *  @param map 当前地图
+ *  @param col 需要消除的行
+ */
+void disappearEmptyCols(Map map, const int col);
+
+/**
+ *  获取空列
+ *
+ *  @param map        当前地图
+ *  @param lowerLimit 范围下限
+ *  @param upperLimit 范围山上限
+ *
+ *  @return 返回空列编号
+ */
+int getEmptyCol(Map map, int lowerLimit, int upperLimit);
 
 /**
  *  求最值
@@ -387,9 +408,60 @@ void fallBoxs(Map map, Array *boxLocations)
             }
         }
     }
+    
+    //遇到空列整体左移
+    //先找到空列
+    while (1)
+    {
+        int emptyCol = getEmptyCol(map, minX, maxX--);
+        if (emptyCol == NONE_COL || emptyCol == map.rect.size.width-1)
+        {
+            break;
+        }
+        //消去空行
+        disappearEmptyCols(map, emptyCol);
+    }
+    
+#if Debug
+    printMap(map);
+#endif
 }
 
 
+void disappearEmptyCols(Map map, const int col)
+{
+    for (int py = 0; py <= (int)map.rect.size.height-1; py++)
+    {
+        for (int px = col+1; px <= (int)map.rect.size.width-1; px++)
+        {
+            Box *srcBox = *(map.map_array + py) + px-1; //空行的方块
+            Box *desBox = *(map.map_array + py) + px;   //被交换的方块
+            //向左平移
+            Box tempBox;
+            copyBox(&tempBox, srcBox);
+            copyBox(srcBox, desBox);
+            copyBox(desBox, &tempBox);
+        }
+    }
+}
+
+int getEmptyCol(Map map, int lowerLimit, int upperLimit)
+{
+    int emptyCol = NONE_COL;
+    for (int px = lowerLimit; px <= upperLimit; px++)
+    {
+        //获取最底部的方块
+        Box *box = *(map.map_array + (int)map.rect.size.height-1) + px;
+        //判断是否可见
+        if (!isVisible(box))
+        {
+            emptyCol = px;
+            break;  //不找了
+        }
+    }
+    
+    return emptyCol;
+}
 
 
 
